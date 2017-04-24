@@ -13,7 +13,10 @@ class Auto{
 		cout << a << endl;
 		};
 		void getA(){
-			cout << a << endl;
+			cout << *a << endl;
+		}
+		void setA(const int *var){
+			this->a = var;
 		}
 		// konstruktor kopiujacy
 								//	Je¿eli obiekt pracuje na jakimœ zewnêtrznym zasobie (np. pamiêci operacyjnej) i posiada 
@@ -25,9 +28,11 @@ class Auto{
  		Auto(const Auto &aa ){
  			// tutaj robimy potrzebne kopiowania 
  			cout << "konstruktor kopiujacy" << endl;
- 			this->a = aa.a;					// bez tego nie bedzie przekopiowana wartosc
+ 			int copy_a = *aa.a;
+    		this->a = new int(copy_a);		// bez tego nie bedzie przekopiowana wartosc i bedzie sie odwylywac do tej samej zmiennej
+				
  		}
-	
+
 };
 
 
@@ -42,8 +47,11 @@ int main(){
 	a.getA();
 	b.getA();		// bez kopiowania nie bedzie zainicjalizowana zmienna a
 					// trzeba zatem przypisac do zmiennej a adres obiketu
-	
-	
+	cout << "--------------" << endl;
+	a.setA(new int(50));
+	a.getA();
+	b.getA();
+	cout << "--------------" << endl;
 	
 //	Auto aj = 5;			// - bez explicit zadziala   // error: copy-initialization does not consider B::B(int)
 	Auto ak = (Auto)5;		// OK: explicit cast performs static_cast	
